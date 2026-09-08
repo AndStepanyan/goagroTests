@@ -1,6 +1,6 @@
-// tests/auth.setup.ts
 import { test as setup, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
+import { requireEnv } from './helpers/env';
 
 const authFile = 'playwright/.auth/user.json'; // Сюда сохранится сессия
 
@@ -8,9 +8,9 @@ setup('Авторизация и сохранение сессии', async ({ pa
   const loginPage = new LoginPage(page);
   
   await loginPage.open();
-  await loginPage.login(process.env.TEST_LOGIN!, process.env.TEST_PASSWORD!);
+  await loginPage.login(requireEnv('TEST_LOGIN'), requireEnv('TEST_PASSWORD'));
 
-  await expect(page).toHaveURL("https://eagleeyewebtest.innline.org/monitoring");
+  await expect(page).toHaveURL(/\/monitoring$/);
 
   await page.context().storageState({ path: authFile });
 });

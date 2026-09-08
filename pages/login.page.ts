@@ -23,7 +23,7 @@ export class LoginPage extends BasePage {
   }
 
   async open() {
-    await this.page.goto('pages/login');
+    await this.page.goto('/pages/login');
   }
 
   async login(login: string, pass: string) {
